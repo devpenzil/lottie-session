@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="h-screen w-full" id="normalbox"></div>
+    <div class="hero w-full h-screen bg-white bg-purple-800" id="hero"></div>
+    <div
+      class="h-screen w-full flex justify-center items-center bg-gray-200 flex-col space-y-8"
+    >
+      <div class="w-96 h-96 bg-white rounded-lg" id="triggerbox"></div>
+      <button class="bg-teal-600 px-6 py-2 rounded-lg" id="trigger">
+        show animation
+      </button>
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.9.3/lottie.min.js"
+      integrity="sha512-e0f5QhAghpnR7F96ocZHSXHNrM1ugw32mmQJsKg02ADeVj7uxFkG5UA+HgrcTTxcPWp415lH+1l1b4nZtyqnsg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-interactivity@latest/dist/lottie-interactivity.min.js"></script>
+    <script>
+      const hero = document.getElementById("hero");
+      const box = document.getElementById("triggerbox");
+      const normal = document.getElementById("normalbox");
+      const trigger = document.querySelector("#trigger");
+      const animateHero = bodymovin.loadAnimation({
+        wrapper: hero,
+        animType: "svg",
+        loop: false,
+        autoplay: false,
+        path: "./animation/space.json",
+      });
+      LottieInteractivity.create({
+        mode: "scroll",
+        player: animateHero,
+        actions: [
+          {
+            visibility: [0, 1],
+            type: "seek",
+            frames: [0, 300],
+          },
+        ],
+      });
+      const animatebox = bodymovin.loadAnimation({
+        wrapper: box,
+        animType: "svg",
+        loop: false,
+        autoplay: false,
+        path: "./animation/confetti.json",
+      });
+      const normalAnimation = bodymovin.loadAnimation({
+        wrapper: normal,
+        animType: "svg",
+        loop: true,
+        autoplay: true,
+        path: "./animation/girl.json",
+      });
+      trigger.addEventListener("click", () => {
+        animatebox.goToAndPlay(0, true);
+      });
+      normalAnimation();
+    </script>
+  </body>
+</html>
